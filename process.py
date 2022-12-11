@@ -108,7 +108,11 @@ class ProcessManager:
 
                 part_number = self._getMpnFromFootprint(footprint)
 
-                if part_number == "C106900":
+                # footprint_name_string = footprint.GetFootprintName()
+
+                if footprint_name == "TO-252-2":
+                    orientation_fix -= 0
+                elif part_number == "C106900":
                     orientation_fix -= 0
                 elif footprint.GetReference()[0] == 'U':
                     orientation_fix -= 90
