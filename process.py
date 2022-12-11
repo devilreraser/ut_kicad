@@ -27,13 +27,11 @@ class ProcessManager:
         plot_options.SetScale(1)
         plot_options.SetMirror(False)
         plot_options.SetUseGerberAttributes(True)
+        plot_options.SetExcludeEdgeLayer(True)
         plot_options.SetUseGerberProtelExtensions(False)
         plot_options.SetUseAuxOrigin(True)
         plot_options.SetSubtractMaskFromSilk(False)
         plot_options.SetDrillMarksType(0)  # NO_DRILL_SHAPE
-        
-        if hasattr(plot_options, "SetExcludeEdgeLayer"):
-            plot_options.SetExcludeEdgeLayer(True)
 
         for layer_info in plotPlan:
             if self.board.IsLayerEnabled(layer_info[1]):
@@ -105,11 +103,29 @@ class ProcessManager:
                     unique_id = str(footprint_designators[footprint.GetReference()])
                     footprint_designators[footprint.GetReference()] -= 1
 
+                orientation_fix = footprint.GetOrientation() / 10.0
+
+
+                part_number = self._getMpnFromFootprint(footprint)
+
+                if part_number == "C106900":
+                    orientation_fix -= 0
+                elif footprint.GetReference()[0] == 'U':
+                    orientation_fix -= 90
+                elif footprint.GetReference()[0] == 'Q':
+                    orientation_fix -= 180
+                else:
+                    orientation_fix -= 0
+
+                if orientation_fix < -90:
+                    orientation_fix += 360
+
+
                 self.components.append({
                     'Designator': "{}{}{}".format(footprint.GetReference(), "" if unique_id == "" else "_", unique_id),
                     'Mid X': (footprint.GetPosition()[0] - self.board.GetDesignSettings().GetAuxOrigin()[0]) / 1000000.0,
                     'Mid Y': (footprint.GetPosition()[1] - self.board.GetDesignSettings().GetAuxOrigin()[1]) * -1.0 / 1000000.0,
-                    'Rotation': footprint.GetOrientation().AsDegrees() if hasattr(footprint.GetOrientation(), 'AsDegrees') else footprint.GetOrientation() / 10.0,
+                    'Rotation': orientation_fix,
                     'Layer': layer,
                 })
 
@@ -174,13 +190,7 @@ class ProcessManager:
         return temp_file
 
     def _getMpnFromFootprint(self, footprint):
-        keys = ['LCSC Part #', 'JLCPCB Part #']
-        fallback_keys = ['LCSC', 'JLC', 'MPN', 'Mpn', 'mpn']
-
+        keys = ['mpn', 'Mpn', 'MPN', 'JLC_MPN', 'LCSC_MPN', 'LCSC Part #', 'JLC', 'LCSC']
         for key in keys:
-            if footprint.HasProperty(key):
-                return footprint.GetProperty(key)
-
-        for key in fallback_keys:
             if footprint.HasProperty(key):
                 return footprint.GetProperty(key)

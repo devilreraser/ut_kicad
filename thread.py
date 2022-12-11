@@ -24,6 +24,7 @@ class ProcessThread(Thread):
         temp_dir = tempfile.mkdtemp()
         _, temp_file = tempfile.mkstemp()
         project_directory = os.path.dirname(self.process_manager.board.GetFileName())
+        project_directory_name = os.path.basename(project_directory)
         output_path = os.path.join(project_directory, outputFolder)
 
         # configure and generate gerber
@@ -62,7 +63,8 @@ class ProcessThread(Thread):
                 percent = read_so_far * 1e2 / total_size
                 self.report(75 + percent / 8)
 
-        os.rename(temp_file, os.path.join(temp_dir, gerberArchiveName))
+        #os.rename(temp_file, os.path.join(temp_dir, gerberArchiveName))
+        os.rename(temp_file, os.path.join(temp_dir, project_directory_name + ".zip"))
 
         try:
             if os.path.exists(output_path):
@@ -72,6 +74,12 @@ class ProcessThread(Thread):
             webbrowser.open("file://%s" % (output_path))
         except Exception as e: 
             webbrowser.open("file://%s" % (temp_dir))
+
+        # Open file
+        #fd = os.open("f1.txt",os.O_RDWR|os.CREAT)
+
+        # Writing text
+        #ret = os.write(fd,"This is test")
 
         self.report(-1)
 
