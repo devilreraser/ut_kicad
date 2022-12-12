@@ -110,8 +110,200 @@ class ProcessManager:
 
                 # footprint_name_string = footprint.GetFootprintName()
 
-                if footprint_name == "TO-252-2":
+                #one zoom mouse is 1.5 coef
+
+                position_x = footprint.GetPosition()[0]
+                position_y = footprint.GetPosition()[1]
+
+                # AQG22212
+                if part_number == "C719647":
+
+                    if orientation_fix == 90:
+                        position_x += 15240000
+                        position_y += -0
+                    elif orientation_fix == -90:
+                        position_x -= 15240000
+                        position_y -= -0
+                    elif orientation_fix == 0:
+                        position_y -= -15240000
+                        position_x += 0
+                    elif orientation_fix == 180:
+                        position_y += -15240000
+                        position_x -= 0
+
+                    orientation_fix -= 270
+                    if orientation_fix < -90:
+                        orientation_fix += 360
+                # ESP32
+                elif footprint_name == "ESP32-WROOM-32":
+
+                    if orientation_fix == 90:
+                        position_x += 783650
+                    elif orientation_fix == -90:
+                        position_x -= 783650
+                    elif orientation_fix == 0:
+                        position_y -= -783650
+                    elif orientation_fix == 180:
+                        position_y += -783650
+
+                    orientation_fix -= 90
+                    if orientation_fix < -90:
+                        orientation_fix += 360
+                # 3-pin 5.08
+                elif part_number == "C409143":
+
+                    if orientation_fix == 90:
+                        position_y += -5080000
+                    elif orientation_fix == -90:
+                        position_y -= -5080000
+                    elif orientation_fix == 0:
+                        position_x += 5080000
+                    elif orientation_fix == 180:
+                        position_x -= 5080000
+
                     orientation_fix -= 0
+                    if orientation_fix < -90:
+                        orientation_fix += 360
+                # 2-pin 5.08      
+                elif part_number == "C441386":
+
+                    if orientation_fix == 90:
+                        position_y += -2540000
+                        position_x -= 50000
+                    elif orientation_fix == -90:
+                        position_y -= -2540000
+                        position_x += 50000
+                    elif orientation_fix == 0:
+                        position_x += 2540000
+                        position_y += -50000
+                    elif orientation_fix == 180:
+                        position_x -= 2540000
+                        position_y -= -50000
+
+                    orientation_fix -= 180
+                    if orientation_fix < -90:
+                        orientation_fix += 360
+                # 3-pin 3.81       
+                elif part_number == "C395692":
+
+                    if orientation_fix == 90:
+                        position_y += -3810000
+                    elif orientation_fix == -90:
+                        position_y -= -3810000
+                    elif orientation_fix == 0:
+                        position_x += 3810000
+                    elif orientation_fix == 180:
+                        position_x -= 3810000
+
+                    orientation_fix -= 180
+                    if orientation_fix < -90:
+                        orientation_fix += 360
+                # 2-pin 3.81    
+                elif part_number == "C8396":
+
+                    if orientation_fix == 90:
+                        position_y += -1905000
+                    elif orientation_fix == -90:
+                        position_y -= -1905000
+                    elif orientation_fix == 0:
+                        position_x += 1905000
+                    elif orientation_fix == 180:
+                        position_x -= 1905000
+
+                    orientation_fix -= 180
+                    if orientation_fix < -90:
+                        orientation_fix += 360
+                    
+                elif footprint_name == "C_Rect_L10.0mm_W4.0mm_P7.50mm_FKS3_FKP3":
+
+                    if orientation_fix == 90:
+                        position_y += -3750000
+                    elif orientation_fix == -90:
+                        position_y -= -3750000
+                    elif orientation_fix == 0:
+                        position_x += 3750000
+                    elif orientation_fix == 180:
+                        position_x -= 3750000
+
+                    orientation_fix -= 0
+                    if orientation_fix < -90:
+                        orientation_fix += 360
+
+                elif footprint_name == "R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal":
+
+                    if orientation_fix == 90:
+                        position_y += -5080000
+                    elif orientation_fix == -90:
+                        position_y -= -5080000
+                    elif orientation_fix == 0:
+                        position_x += 5080000
+                    elif orientation_fix == 180:
+                        position_x -= 5080000
+
+                    orientation_fix -= 0
+                    if orientation_fix < -90:
+                        orientation_fix += 360
+
+                elif footprint_name == "R_Axial_DIN0204_L3.6mm_D1.6mm_P7.62mm_Horizontal":
+
+                    if orientation_fix == 90:
+                        position_y += -3810000
+                    elif orientation_fix == -90:
+                        position_y -= -3810000
+                    elif orientation_fix == 0:
+                        position_x += 3810000
+                    elif orientation_fix == 180:
+                        position_x -= 3810000
+
+                    orientation_fix -= 0
+                    if orientation_fix < -90:
+                        orientation_fix += 360
+
+                elif footprint_name == "TO-220-3_Vertical":
+
+                    if orientation_fix == 90:
+                        position_y += -2540000
+                    elif orientation_fix == -90:
+                        position_y -= -2540000
+                    elif orientation_fix == 0:
+                        position_x += 2540000
+                    elif orientation_fix == 180:
+                        position_x -= 2540000
+
+                    orientation_fix -= 0
+                    if orientation_fix < -90:
+                        orientation_fix += 360
+
+                elif footprint_name == "SOT-89-3":
+                    # one arrow click is 0.625 mm ?
+                    if orientation_fix == 90:
+                        position_y -= -285000
+                    elif orientation_fix == -90:
+                        position_y += -285000
+                    elif orientation_fix == 0:
+                        position_x -= 285000
+                    elif orientation_fix == 180:
+                        position_x += 285000
+
+                    orientation_fix -= 180
+                    if orientation_fix < -90:
+                        orientation_fix += 360
+
+                elif footprint_name == "TO-252-2":
+
+                    if orientation_fix == 90:
+                        position_y -= -1000000
+                    elif orientation_fix == -90:
+                        position_y += -1000000
+                    elif orientation_fix == 0:
+                        position_x -= 1000000
+                    elif orientation_fix == 180:
+                        position_x += 1000000
+
+                    orientation_fix -= 0
+                    if orientation_fix < -90:
+                        orientation_fix += 360
+
                 elif part_number == "C106900":
                     orientation_fix -= 0
                 elif footprint.GetReference()[0] == 'U':
@@ -127,8 +319,8 @@ class ProcessManager:
 
                 self.components.append({
                     'Designator': "{}{}{}".format(footprint.GetReference(), "" if unique_id == "" else "_", unique_id),
-                    'Mid X': (footprint.GetPosition()[0] - self.board.GetDesignSettings().GetAuxOrigin()[0]) / 1000000.0,
-                    'Mid Y': (footprint.GetPosition()[1] - self.board.GetDesignSettings().GetAuxOrigin()[1]) * -1.0 / 1000000.0,
+                    'Mid X': (position_x - self.board.GetDesignSettings().GetAuxOrigin()[0]) / 1000000.0,
+                    'Mid Y': (position_y - self.board.GetDesignSettings().GetAuxOrigin()[1]) * -1.0 / 1000000.0,
                     'Rotation': orientation_fix,
                     'Layer': layer,
                 })
@@ -142,11 +334,11 @@ class ProcessManager:
 
                 # merge similar parts into single entry
                 insert = True
-                for component in self.bom:
-                    if component['Footprint'].upper() == footprint_name.upper() and component['Value'].upper() == footprint.GetValue().upper():
-                        component['Designator'] += ", " + "{}{}{}".format(footprint.GetReference(), "" if unique_id == "" else "_", unique_id)
-                        component['Quantity'] += 1
-                        insert = False
+                # for component in self.bom:
+                #     if component['Footprint'].upper() == footprint_name.upper() and component['Value'].upper() == footprint.GetValue().upper():
+                #         component['Designator'] += ", " + "{}{}{}".format(footprint.GetReference(), "" if unique_id == "" else "_", unique_id)
+                #         component['Quantity'] += 1
+                #         insert = False
 
                 # add component to BOM
                 if insert:
